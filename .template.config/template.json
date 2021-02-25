@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Alex Manea",
+  "classifications": ["Web","WebAPI"],
+  "identity": "alixion.cleanapi",
+  "name": "Clean Arch WebAPI Solution",
+  "shortName":"cleanapi",
+  "tags": {
+    "type": "project",
+    "language": "C#"
+  },
+  "sourceName": "CleanApiTemplate"
+}
