@@ -1,0 +1,5 @@
+﻿dotnet ef migrations add NewMig --output-dir Data/Migrations --project ../CleanApi.Infrastructure --startup-project ../CleanApi.Api
+dotnet ef migrations add NewMig --output-dir Data/Migrations --startup-project ../CleanApi.Api
+
+:: dotnet ef migrations script --context AppDbContext -output-dir Data/Sql/new-migration.sql --startup-project ../CleanApi.Api
+
