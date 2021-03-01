@@ -1,3 +1,6 @@
+# Custom solution ignores
+**/Migrations/
+
 # Common IntelliJ Platform excludes
 
 # User specific

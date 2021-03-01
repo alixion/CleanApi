@@ -1,7 +1,7 @@
 ﻿using System;
 using CleanApi.Domain.Common;
 
-namespace CleanApi.Domain
+namespace CleanApi.Domain.ToDoItems
 {
     public class ToDoItemId : TypedIdValueBase
     {

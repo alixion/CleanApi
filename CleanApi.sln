@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanApi.Application", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanApi.Api", "src\CleanApi.Api\CleanApi.Api.csproj", "{96A39BB1-38A2-4043-B8C8-53568DC8538A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanApi.DbMigrator", "CleanApi.DbMigrator\CleanApi.DbMigrator.csproj", "{9B03094D-504B-4F72-B867-BE9FC989B7A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanApi.DbMigrator", "src\CleanApi.DbMigrator\CleanApi.DbMigrator.csproj", "{02CAA395-9375-489B-BA2E-AB30B649C18A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +32,9 @@ Global
 		{96A39BB1-38A2-4043-B8C8-53568DC8538A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96A39BB1-38A2-4043-B8C8-53568DC8538A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96A39BB1-38A2-4043-B8C8-53568DC8538A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B03094D-504B-4F72-B867-BE9FC989B7A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B03094D-504B-4F72-B867-BE9FC989B7A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B03094D-504B-4F72-B867-BE9FC989B7A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B03094D-504B-4F72-B867-BE9FC989B7A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02CAA395-9375-489B-BA2E-AB30B649C18A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02CAA395-9375-489B-BA2E-AB30B649C18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02CAA395-9375-489B-BA2E-AB30B649C18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02CAA395-9375-489B-BA2E-AB30B649C18A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
