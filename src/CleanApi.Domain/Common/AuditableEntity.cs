@@ -5,7 +5,7 @@ namespace CleanApi.Domain.Common
 {
     public class AuditableEntity : Entity
     {
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; set; } = "unknown";
 
         public DateTimeOffset CreateDate { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using DbUp;
 
@@ -18,30 +19,31 @@ namespace CleanApi.DbMigrator
 
 
             var connectionString = args[0];
-            var dropIfExists = args.Length > 0 || args[1] == "drop-if-exists";
+            var path = args[1] ?? Path.Combine(Environment.CurrentDirectory, "Sql");
+            var dropIfExists = args.Length > 1 || args[2] == "drop-if-exists";
 
-            return RunDbUpdate(connectionString, dropIfExists);
+            return RunDbUpdate(connectionString, path, dropIfExists);
         }
         
-        private static int RunDbUpdate(string connectionString, bool dropIfExists)
+        private static int RunDbUpdate(string connectionString, string path, bool dropIfExists)
         {
             if (dropIfExists)
             {
                 EnsureDatabase.For.PostgresqlDatabase(connectionString);
             }
-            var upgrader = DeployChanges.To
+            var upgradeEngine = DeployChanges.To
                 .PostgresqlDatabase(connectionString)
-                .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
+                .WithScriptsFromFileSystem(path)
                 .LogToConsole()
                 .Build();
 
-            var upgradeResult = upgrader.PerformUpgrade();
+            var upgradeResult = upgradeEngine.PerformUpgrade();
             if (!upgradeResult.Successful)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(upgradeResult.Error);
                 Console.ResetColor();
-                return -1;
+                return 1;
             }
             
             Console.ForegroundColor = ConsoleColor.Green;

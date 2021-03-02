@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using CleanApi.Application;
 using CleanApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -8,15 +9,24 @@ namespace CleanApi.Infrastructure
 {
     public static class StartupInfrastructure
     {
-        public static void AddDbContext(this IServiceCollection services, string connectionString) =>
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, string connectionString)
+        {
+            services.AddDbContext(connectionString);
+            services.AddScoped<IDbConnectionFactory, PostgresConnectionFactory>();
+            return services;
+        }
+
+        public static IServiceCollection AddDbContext(this IServiceCollection services, string connectionString)
+        {
             services.AddDbContext<CleanApiContext>(options =>
             {
                 options
-                    .ReplaceService<IValueConverterSelector,StronglyTypedIdValueConverterSelector>()
+                    .ReplaceService<IValueConverterSelector, StronglyTypedIdValueConverterSelector>()
                     .UseNpgsql(connectionString)
                     .UseSnakeCaseNamingConvention();
             });
-
+            return services;
+        }
         // public static void AddApplication(this IServiceCollection services)
         // {
         //     services.AddAutoMapper(Assembly.GetExecutingAssembly());

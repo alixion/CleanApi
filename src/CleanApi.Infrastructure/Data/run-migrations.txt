@@ -5,4 +5,3 @@ dotnet ef migrations add NewMigration --output-dir Data/Migrations --project ../
 dotnet ef migrations add NewMigration --output-dir Data/Migrations --startup-project ../CleanApi.Api
 
 dotnet ef migrations script --context CleanApiContext -output-dir ../CleanApi.DbMigrator/Sql/new-migration.sql
-
