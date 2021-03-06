@@ -27,11 +27,14 @@ namespace CleanApi.Application.IntegrationTests.ToDoItems
             };
 
             var itemId = await _fixture.SendAsync(command);
-
             var todo = await _fixture.FindAsync<ToDoItem, ToDoItemId>(new ToDoItemId(itemId));
+
+            itemId.Should().NotBeEmpty();
+            
             todo.Should().NotBeNull();
             todo.Title.Should().Be("Test");
-            itemId.Should().NotBeEmpty();
+            todo.Id.Value.Should().Be(itemId);
+            
 
             await _fixture.RemoveAsync(todo);
         }

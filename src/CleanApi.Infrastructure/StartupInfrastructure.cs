@@ -1,6 +1,9 @@
 ﻿using System.Reflection;
 using CleanApi.Application;
+using CleanApi.Domain.Common;
+using CleanApi.Domain.ToDoItems;
 using CleanApi.Infrastructure.Data;
+using CleanApi.Infrastructure.Data.EfRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +28,9 @@ namespace CleanApi.Infrastructure
                     .UseNpgsql(connectionString)
                     .UseSnakeCaseNamingConvention();
             });
+            services.AddScoped<IToDoRepository, ToDoRepository>();
+            services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
         // public static void AddApplication(this IServiceCollection services)

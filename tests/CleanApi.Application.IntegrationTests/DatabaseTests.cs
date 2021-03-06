@@ -20,7 +20,8 @@ namespace CleanApi.Application.IntegrationTests
         [Fact]
         public void CanConnectToLocalPostgres()
         {
-            var connectionFactory = _fixture.ServiceProvider.GetService<IDbConnectionFactory>();
+            var connectionFactory = _fixture.Scope.ServiceProvider.GetService<IDbConnectionFactory>()
+                                    ?? throw new NullReferenceException("Could not get DbConnectionFactory service");
             using var db = connectionFactory.CreateNewConnection();
             var result = db.ExecuteScalar<int>("SELECT 1");
             result.Should().Be(1);

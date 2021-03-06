@@ -14,16 +14,14 @@ namespace CleanApi.Application.IntegrationTests.Common
     
     public class SliceFixture:IDisposable
     {
-        public IServiceScope Scope { get; }
-        public ServiceProvider ServiceProvider { get; }
-        public CleanApiContext Context { get;  }
+        private readonly IServiceScope _scope;
+        public IServiceScope Scope => _scope;
+        private readonly ServiceProvider _serviceProvider;
+        private readonly CleanApiContext _context;
         private readonly IConfiguration _config;
-        
-        
 
         public SliceFixture()
         {
-           
             _config = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 .AddJsonFile("appsettings.json", optional: true)
@@ -31,15 +29,17 @@ namespace CleanApi.Application.IntegrationTests.Common
                 .Build();
             
             var services = new ServiceCollection();
-            services.AddLogging();
             services.AddSingleton(_config);
-            services.AddApplication();
-            services.AddInfrastructure(_config.GetConnectionString("DefaultConnection"));
+
+            services
+                .AddLogging()
+                .AddApplication()
+                .AddInfrastructure(_config.GetConnectionString("DefaultConnection"));
             
-            ServiceProvider = services.BuildServiceProvider();
+            _serviceProvider = services.BuildServiceProvider();
             
-            Scope = CreateScope();
-            Context = Scope.ServiceProvider.GetService<CleanApiContext>();
+            _scope = CreateScope();
+            _context = _scope.ServiceProvider.GetService<CleanApiContext>();
         }
 
 
@@ -47,38 +47,40 @@ namespace CleanApi.Application.IntegrationTests.Common
         public async Task<TEntity> FindAsync<TEntity, TKey>(TKey id)
             where TEntity : class
         {
-            return await Context.FindAsync<TEntity>(id);
+            return await _context.FindAsync<TEntity>(id);
         }
         public async Task AddAsync<TEntity>(TEntity entity)
             where TEntity : class
         {
-            Context.Add(entity);
-            await Context.SaveChangesAsync();
+            _context.Add(entity);
+            await _context.SaveChangesAsync();
         }
         
         public async Task RemoveAsync<TEntity>(TEntity entity)
             where TEntity : class
         {
-            Context.Remove(entity);
-            await Context.SaveChangesAsync();
+            _context.Remove(entity);
+            await _context.SaveChangesAsync();
         }
         public async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
         {
-            var mediatr = Scope.ServiceProvider.GetService<IMediator>();
+            var mediatr = _serviceProvider.GetService<IMediator>()??
+                          throw new NullReferenceException("Could not get Mediatr from the service provider");
             return await mediatr.Send(request);
         }
-        
-        
-        public IServiceScope CreateScope()
+
+
+        private IServiceScope CreateScope()
         {
-            var serviceFactory = ServiceProvider.GetService <IServiceScopeFactory>();
+            var serviceFactory = _serviceProvider.GetService<IServiceScopeFactory>() ??
+                                 throw new NullReferenceException("Could not get ScopeFactory from the service provider.");
             return serviceFactory.CreateScope();
         }
 
         public void Dispose()
         {
-            Scope?.Dispose();
-            ServiceProvider?.Dispose();
+            _scope?.Dispose();
+            _serviceProvider?.Dispose();
         }
     }
 }
