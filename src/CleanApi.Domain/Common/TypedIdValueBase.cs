@@ -30,6 +30,8 @@ namespace CleanApi.Domain.Common
         {
             return Value.GetHashCode();
         }
+        
+        public override string ToString() => Value.ToString();
 
         public bool Equals(TypedIdValueBase other)
         {

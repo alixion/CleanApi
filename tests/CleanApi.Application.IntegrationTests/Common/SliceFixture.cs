@@ -64,7 +64,7 @@ namespace CleanApi.Application.IntegrationTests.Common
         }
         public async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
         {
-            var mediatr = _serviceProvider.GetService<IMediator>()??
+            var mediatr = _scope.ServiceProvider.GetService<IMediator>()??
                           throw new NullReferenceException("Could not get Mediatr from the service provider");
             return await mediatr.Send(request);
         }

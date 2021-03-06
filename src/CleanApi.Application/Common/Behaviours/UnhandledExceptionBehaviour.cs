@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using CleanApi.Application.Common.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -19,6 +20,11 @@ namespace CleanApi.Application.Common.Behaviours
             try
             {
                 return await next();
+            }
+            catch (ApplicationException e)
+            {
+                _logger.LogInformation(e.Message);
+                throw;
             }
             catch (Exception e)
             {
