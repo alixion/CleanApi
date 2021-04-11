@@ -46,6 +46,7 @@ namespace CleanApi.Api
             app.UseRouting();
 
             app.UseSwagger();
+            
 
             app.UseEndpoints(endpoints =>
             {
